@@ -7,7 +7,6 @@ var path = require('path');
 var _ = require('lodash');
 
 var fallback = require('connect-history-api-fallback');
-var log = require('connect-logger');
 
 module.exports = {
   logFileChanges: false, // why, why why would this be interesting?

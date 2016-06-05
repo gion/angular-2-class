@@ -6,7 +6,12 @@
 ## Install
 
 ```sh
+node -v              # check node version
+6.0.0                # looks good
 cd path/to/this/repo
+
+# once we're in this repo
+cd app
 npm install
 ```
 

@@ -25,6 +25,7 @@ for(const file of process.argv.slice(2)) {
       ${html}
     </body>
   `;
+
   fs.writeFileSync(file.replace(/\.md$/, ".html"), 
     wrapped, encoding);
 }

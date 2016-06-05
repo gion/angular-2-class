@@ -10,14 +10,13 @@
     "live": "browser-sync start -c bs-config.js",
     "start": "concurrently \"npm run tsc:w\" \"npm run live\" \"npm run backend\"",
     "exercise": "concurrently \"npm run tsc:exercise\" \"nodemon --ext ts -w typescript-exercises typescript-exercises/exercise.js\"",
-    "build:exercises": "node './.build-exercises.js' *.md",
     "typings": "typings"
   },
   "engines": {
     "node": ">= 6.0.0"
   },
   "enginesStrict": true,
-  "license": "AGPL-3",
+  "license": "©",
   "dependencies": {
     "@angular/common": "2.0.0-rc.1",
     "@angular/compiler": "2.0.0-rc.1",
@@ -30,6 +29,7 @@
     "@angular/upgrade": "2.0.0-rc.1",
     "body-parser": "^1.15.1",
     "browser-sync": "^2.12.12",
+    "connect-history-api-fallback": "^1.2.0",
     "core-js": "^2.4.0",
     "cors": "^2.7.1",
     "express": "^4.13.4",
@@ -42,7 +42,6 @@
   },
   "devDependencies": {
     "concurrently": "^2.0.0",
-    "marked": "^0.3.5",
     "typescript": "^1.8.10",
     "typings": "^1.0.4"
   }

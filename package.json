@@ -4,8 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "postinstall": "cd exercises; npm install"
+    "build:exercises": "node './.build-exercises.js' exercises/*.md",
+    "postinstall": "cd app && npm install && cd ../ && cd slides && npm install"
+  },
+  "devDependencies": {
+    "marked": "^0.3.5"
   },
   "author": "Tim Ruffles <timruffles@gmail.com> https://truffles.me.uk",
-  "license": "AGPL-3.0"
+  "license": "©"
 }
