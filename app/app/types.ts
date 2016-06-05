@@ -3,10 +3,14 @@ export type cartEntry = {
 };
 
 export type product = {
-  price?: number;
+  price: number;
   name: string;
   description: string;
   id: number;
+};
+
+export type checkoutItem  = cartEntry & product & {
+  subTotal: number;
 };
 
 

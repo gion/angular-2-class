@@ -1,18 +1,43 @@
 import { Injectable } from "@angular/core";
-import { product, cartEntry } from "./types"
+import { product, cartEntry, checkoutItems } from "./types"
 import { ClientStorage } from "./ClientStorage";
+import { ProductStore } from "./ProductStore";
+
+export type checkoutState = { items: checkoutItem[], total: number };
 
 @Injectable()
 export class Cart {
 
-  entries = new Map<number, cartEntry>();
+  public entries = new Map<number, cartEntry>();
 
-  constructor(private storage: ClientStorage) {
-    const entryJson = this.fromStorage()
+  constructor(private storage: ClientStorage,
+    private store: ProductStore) {
+    this.loadFromStorage()
+  }
+
+  checkoutState(): Promise<checkoutState> {
+    const entries = Array.from(this.entries.entries())
+      .map(([productId, entry])  => {
+        return this.store.get(productId)
+          .then(product => {
+            return Object.assign({
+              subTotal: entry.quantity * product.price,
+            }, product, entry);
+          })
+      });
+
+    return Promise.all(entries)
+      .then(items => {
+        return Object.assign({
+          total: items.reduce((sum, item) => sum + item.subTotal, 0)
+        }, { items });
+      });
   }
 
   get(productId: number): Promise<cartEntry> {
-    return Promise.resolve(this.entries.get(productId) || new CartEntry);
+    const value = this.entries.get(productId) || new CartEntry;
+    console.log(value);
+    return Promise.resolve(value);
   }
 
   add(productId: number): Promise<cartEntry> {
@@ -36,16 +61,16 @@ export class Cart {
     setTimeout(() => this.storage.set('cartEntries', this))
   }
 
-  private fromStorage() {
+  private loadFromStorage() {
     const entries = this.storage.get("cartEntries", {});
     for(const id in entries) {
-      this.entries.set(id, entries[id]);
+      this.entries.set(Number(id), new CartEntry(entries[id].quantity));
     }
   }
 
   private toJSON() {
     const lookup = {};
-    for(const [k,v] of this.entries.entries()) {
+    for(const [k,v] of Array.from(this.entries.entries())) {
       lookup[k] = v;
     }
     return lookup;
