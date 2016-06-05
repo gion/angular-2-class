@@ -1,7 +1,7 @@
 import { Input, Component } from "@angular/core";
-import { checkoutItems } from "./types";
 import { Cart, checkoutState } from "./Cart";
 import { ProductStore } from "./ProductStore";
+import { Payment } from "./Payment";
 
 @Component({
   selector: "checkout",
@@ -19,9 +19,9 @@ import { ProductStore } from "./ProductStore";
 export class Checkout {
 
   checkout: checkoutState;
-  order: string;
+  transaction: { successful?: boolean, pending?: boolean };
 
-  constructor(public cart: Cart) {
+  constructor(public cart: Cart, private payment: Payment) {
     this.cart.checkoutState()
       .then(state => this.checkout = state)
   }
@@ -31,7 +31,27 @@ export class Checkout {
       cardNumber: prepareCardNumber(form.value.cardNumber),
     });
 
-    this.order = JSON.stringify(prepared, null, 4);
+    this.transaction = { pending: true };
+
+    this.payment.successful()
+      .then(() => {
+        this.transaction = { successful: true };
+      })
+      .catch((e) => {
+        this.transaction = { successful: false };
+      })
+  }
+
+  paymentMessage() {
+    if(!this.transaction) {
+      return "":
+    } else if(this.transaction.pending) {
+      return "Sending your payment...";
+    } else if(this.transaction.successful) {
+      return "Your payment was successful!";
+    } else {
+      return "Your payment failed";
+    }
   }
 
 }

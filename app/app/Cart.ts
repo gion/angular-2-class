@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { product, cartEntry, checkoutItem } from "./types"
+import { product, cartEntry } from "./types"
 import { ClientStorage } from "./ClientStorage";
 import { ProductStore } from "./ProductStore";
 
@@ -56,9 +56,6 @@ export class Cart {
     return new Promise((resolve) => {
       setTimeout(() => resolve(newEntry), 450);
     });
-  }
-
-  pay(paymentDetails: any) {
   }
 
   private changed() {

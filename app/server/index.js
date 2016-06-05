@@ -7,6 +7,7 @@ const _ = require("lodash");
 const cors = require("cors");
 
 const PORT = process.env.PORT || 3999;
+const API_RESPONSE_TIME = Number(process.env.API_RESPONSE_TIME || 1500);
 
 const app = express();
 
@@ -17,18 +18,22 @@ app.use(cors());
 app.use(morgan("short"));
 
 app.post("/test/checkout/success", (req, res) => {
-  res
-    .send({
-      ok: true,
-    });
+  setTimeout(() => {
+    res
+      .send({
+        ok: true,
+      });
+  }, API_RESPONSE_TIME);
 });
 
 app.post("/test/checkout/failure", (req, res) => {
-  res
-    .status(400)
-    .send({
-      code: "CREDIT_LIMIT_EXCEEDED",
-    })
+  setTimeout(() => {
+    res
+      .status(400)
+      .send({
+        code: "CREDIT_LIMIT_EXCEEDED",
+      })
+  }, API_RESPONSE_TIME);
 });
 
 app.all("*", (req, res, next) => {

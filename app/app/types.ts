@@ -9,6 +9,10 @@ export type product = {
   id: number;
 };
 
+// abstract
+export class API_URL {
+}
+
 
 
 
