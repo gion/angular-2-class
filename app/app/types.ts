@@ -9,8 +9,6 @@ export type product = {
   id: number;
 };
 
-export type checkoutItem  = cartEntry & product & {
-  subTotal: number;
-};
+
 
 

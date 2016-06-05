@@ -1,14 +1,17 @@
 import { Injectable } from "@angular/core";
-import { product, cartEntry, checkoutItems } from "./types"
+import { product, cartEntry, checkoutItem } from "./types"
 import { ClientStorage } from "./ClientStorage";
 import { ProductStore } from "./ProductStore";
 
+export type checkoutItem  = cartEntry & product & {
+  subTotal: number;
+};
 export type checkoutState = { items: checkoutItem[], total: number };
 
 @Injectable()
 export class Cart {
 
-  public entries = new Map<number, cartEntry>();
+  public entries = new Map<number, CartEntry>();
 
   constructor(private storage: ClientStorage,
     private store: ProductStore) {
@@ -55,6 +58,9 @@ export class Cart {
     });
   }
 
+  pay(paymentDetails: any) {
+  }
+
   private changed() {
     // no need to do this right now, we can leave till later. ideally
     // we would debounce + use `window.requestIdle`
@@ -79,7 +85,7 @@ export class Cart {
 
 class CartEntry {
   constructor(
-    public quantity = 0,
+    public quantity = 0
   ) {
   }
 

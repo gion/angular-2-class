@@ -25,7 +25,7 @@ import { ROUTER_DIRECTIVES, ROUTER_PROVIDERS, Routes, Router } from "@angular/ro
 })
 @Routes([
   { path: "/", component: ProductList },
-  { path: "/products/:id", component: ProductPage }
+  { path: "/products/:id", component: ProductPage },
   { path: "/checkout", component: Checkout }
 ])
 export class App {
