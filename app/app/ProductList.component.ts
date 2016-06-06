@@ -1,10 +1,34 @@
 import { Component, Input } from '@angular/core';
+import { ProductStore } from './ProductStore';
+import { Product } from './Product.component';
+import { product } from './types';
 
 @Component ({
     selector: 'product-list',
-    templateUrl: 'app/ProductList.html'
+    templateUrl: 'app/ProductList.html',
+    directives: [Product],
+    providers: [
+        {
+            // aka interface
+            provide: ProductStore,
+
+            // value, ref, def
+            // can be deferred to runtime
+            useClass: ProductStore
+        }
+    ]
 })
 
-export class ProductList {
-    @Input() listOfProducts: Array<any>;
+class ProductList {
+    // @Input() listOfProducts: Array<any>;
+
+    listOfProducts: Array<product>;
+    store: ProductStore;
+
+    constructor(store: ProductStore) {
+        store.all()
+            .then(products => this.listOfProducts = products);
+    }
 }
+
+export { ProductList };

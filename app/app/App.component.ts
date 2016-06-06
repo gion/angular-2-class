@@ -1,20 +1,31 @@
 import { Component } from '@angular/core';
+import { ROUTER_PROVIDERS, ROUTER_DIRECTIVES } from '@angular/router';
+import { Routes, Router } from '@angular/router';
 import { ProductList } from './ProductList.component';
 import { Product } from './Product.component';
 import { staticProductList } from './fixtures';
 
+@Routes([
+    {
+        path: '/',
+        component: ProductList
+    }
+])
+
 @Component ({
     selector: 'app',
-    directives: [Product],
+    directives: [ROUTER_DIRECTIVES, ProductList],
+    providers: [ROUTER_PROVIDERS],
     templateUrl: 'app/App.html'
 })
 
 class App {
-    products:any;
+    productList: any;
     private message:String;
-    constructor() {
+
+    constructor(router: Router) {
         this.message = 'Superhero shopz';
-        this.products = staticProductList;
+        this.productList = staticProductList;
     }
 
     // addProduct(name: string): void {
