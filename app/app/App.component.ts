@@ -2,13 +2,17 @@ import { Component } from '@angular/core';
 import { ROUTER_PROVIDERS, ROUTER_DIRECTIVES } from '@angular/router';
 import { Routes, Router } from '@angular/router';
 import { ProductList } from './ProductList.component';
-import { Product } from './Product.component';
 import { staticProductList } from './fixtures';
+import { ProductPage } from './ProductPage.component';
 
 @Routes([
     {
         path: '/',
         component: ProductList
+    },
+    {
+        path: 'products/:id',
+        component: ProductPage
     }
 ])
 

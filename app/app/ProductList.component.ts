@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { ROUTER_DIRECTIVES } from '@angular/router';
 import { ProductStore } from './ProductStore';
 import { Product } from './Product.component';
 import { product } from './types';
@@ -6,7 +7,7 @@ import { product } from './types';
 @Component ({
     selector: 'product-list',
     templateUrl: 'app/ProductList.html',
-    directives: [Product],
+    directives: [ROUTER_DIRECTIVES],
     providers: [
         {
             // aka interface
